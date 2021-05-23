@@ -36,7 +36,6 @@ jobs:
           command: build
           arguments: "-color=false -on-error=abort"
           target: posts/00003-vagrant-box-for-buster64
-        working-directory: ./posts/00003-vagrant-box-for-buster64
         env:
           PACKER_LOG: 1
 

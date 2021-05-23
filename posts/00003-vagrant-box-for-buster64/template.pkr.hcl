@@ -47,7 +47,7 @@ build {
   ]
 
   provisioner "ansible" {
-    playbook_file = "./playbook.yaml"
+    playbook_file = "posts/00003-vagrant-box-for-buster64/playbook.yaml"
     user = "vagrant"
   }
 
