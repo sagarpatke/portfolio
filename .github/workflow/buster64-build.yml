@@ -2,7 +2,9 @@
 name: Packer
 
 on:
-- push
+  push:
+    branches:
+    - main
 
 jobs:
   packer:
