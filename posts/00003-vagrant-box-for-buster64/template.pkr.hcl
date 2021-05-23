@@ -5,8 +5,8 @@ variables {
 source "virtualbox-iso" "buster64" {
   guest_os_type = "Debian_64"
   http_directory = "../../unattended"
-  iso_checksum = "sha512:af1717bd1601b575969b5445407bc0104c8930b64a98ca409cecbdc0b896d10a7df174d1882df8ab3eac435e95b1d94c9bb0cdf0cf64cc33fd468c0a55125d72"
-  iso_url = "debian-10.9.0-amd64-DVD-1.iso"
+  iso_checksum = "sha512:47d35187b4903e803209959434fb8b65ead3ad2a8f007eef1c3d3284f356ab9955aa7e15e24cb7af6a3859aa66837f5fa2e7441f936496ea447904f7dddfdc20"
+  iso_url = "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.9.0-amd64-netinst.iso"
   ssh_username = "vagrant"
   ssh_password = "vagrant"
   ssh_wait_timeout = "1500s"
