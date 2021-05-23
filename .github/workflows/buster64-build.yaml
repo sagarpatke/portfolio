@@ -1,5 +1,5 @@
 ---
-name: Packer
+name: Buster64 build
 
 on:
   push:
