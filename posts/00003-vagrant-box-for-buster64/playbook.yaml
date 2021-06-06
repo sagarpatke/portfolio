@@ -49,4 +49,3 @@
     file:
       path: /EMPTY
       state: absent
-  - include: ./reduce-debian.yaml
