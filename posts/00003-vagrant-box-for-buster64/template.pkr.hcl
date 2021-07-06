@@ -64,6 +64,13 @@ build {
     playbook_file = "posts/00003-vagrant-box-for-buster64/playbook.yaml"
     user = "vagrant"
   }
+
+  post-processor "vagrant" {
+    keep_input_artifact = true
+    provider_override = "virtualbox"
+    compression_level = 6
+    output = "target/packer_buster64_virtualbox.box"
+  }
 }
 
 build {

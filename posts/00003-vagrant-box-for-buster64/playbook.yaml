@@ -38,6 +38,9 @@
     loop:
       - linux-headers-{{ ansible_kernel }}
       - build-essential
+  - name: Autoremove packages
+    shell: |
+      apt autoremove -y
   - name: Clear apt cache
     shell: apt-get clean
   - name: Create empty file
