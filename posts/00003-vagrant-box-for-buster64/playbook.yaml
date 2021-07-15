@@ -11,12 +11,12 @@
       regexp: "^deb cdrom"
       state: absent
   - name: Install linux-headers
-    package:
+    apt:
       name: "{{ item }}"
       state: present
     loop:
-      - linux-headers-{{ ansible_kernel }}
-      - build-essential
+    - linux-headers-{{ ansible_kernel }}
+    - build-essential
   - name: Mount cdrom
     mount:
       src: /home/vagrant/VBoxGuestAdditions.iso
@@ -32,23 +32,9 @@
       path: /mnt
       state: unmounted
   - name: Remove linux-headers
-    package:
+    apt:
       name: "{{ item }}"
       state: absent
     loop:
-      - linux-headers-{{ ansible_kernel }}
-      - build-essential
-  - name: Autoremove packages
-    shell: |
-      apt autoremove -y
-  - name: Clear apt cache
-    shell: apt-get clean
-  - name: Create empty file
-    shell: |
-      dd if=/dev/zero of=/EMPTY
-      rm /EMPTY -rf
-    failed_when: false
-  - name: Cleanup
-    file:
-      path: /EMPTY
-      state: absent
+    - linux-headers-{{ ansible_kernel }}
+    - build-essential

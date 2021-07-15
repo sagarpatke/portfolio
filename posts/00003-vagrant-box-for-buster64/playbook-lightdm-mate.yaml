@@ -8,25 +8,14 @@
       upgrade: full
   - name: Install mate and lightdm
     apt:
-      name: "{{ item }}"
+      name:  "{{ item }}"
       state: present
-    notify:
-      - Enable lightdm
-      - Enable autologin
     loop:
-      - mate-core
-      - lightdm
-  - name: Clear apt cache
-    shell: apt-get clean
-  - name: Create empty file
-    shell: |
-      dd if=/dev/zero of=/EMPTY
-      rm /EMPTY -rf
-    failed_when: false
-  - name: Cleanup
-    file:
-      path: /EMPTY
-      state: absent
+    - mate-desktop-environment-core
+    - lightdm
+    notify:
+    - Enable lightdm
+    - Enable autologin
   handlers:
   - name: Enable lightdm
     service:

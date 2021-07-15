@@ -50,9 +50,10 @@ source "virtualbox-iso" "buster64" {
 }
 
 source "vagrant" "buster64-lightdm-mate" {
+  communicator = "ssh"
   source_path = "target/packer_buster64_virtualbox.box"
+  provider = "virtualbox"
   output_dir = "target/packer_buster64-lightdm-mate_virtualbox"
-  skip_add = true
 }
 
 build {
@@ -65,10 +66,15 @@ build {
     user = "vagrant"
   }
 
+  provisioner "ansible" {
+    playbook_file = "posts/00003-vagrant-box-for-buster64/playbook-minimize.yaml"
+    user = "vagrant"
+  }
+
   post-processor "vagrant" {
     keep_input_artifact = true
     provider_override = "virtualbox"
-    compression_level = 6
+    compression_level = 9
     output = "target/packer_buster64_virtualbox.box"
   }
 }
@@ -80,13 +86,9 @@ build {
 
   provisioner "ansible" {
     playbook_file = "posts/00003-vagrant-box-for-buster64/playbook-lightdm-mate.yaml"
-    user = "vagrant"
   }
 
-  post-processor "vagrant" {
-    keep_input_artifact = true
-    provider_override = "virtualbox"
-    compression_level = 9
-    output = "target/packer_buster64_virtualbox-lightdm-mate.box"
+  provisioner "ansible" {
+    playbook_file = "posts/00003-vagrant-box-for-buster64/playbook-minimize.yaml"
   }
 }
