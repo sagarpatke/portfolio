@@ -1,24 +1,24 @@
-# Build an implementation of Visual Studio Code
+# Build a vagrant box for buster64
 
 ## Status
 
 What is the status, such as proposed, accepted, rejected, deprecated, superseded, etc.?
-rejected
+Accepted
 
 ## Context
 
 What is the issue that we're seeing that is motivating this decision or change?
 
-To figure out what it takes to create a branded Visual Studio Code editor.
+To create a vagrant box that can be used for creation of other vagrant boxes based on Ubuntu 20.04 LTS (Focal Fossa).
 
 ## Decision
 
 What is the change that we're proposing and/or doing?
 
-None. It's a new addition.
+None, it's a new addition.
 
 ## Consequences
 
 What becomes easier or more difficult to do because of this change?
 
-Takes us one step closer te building a learning platform within Visual Studio Code.
+1. Creation of vagrant boxes based on Ubuntu 20.04 LTS (Focal Fossa)

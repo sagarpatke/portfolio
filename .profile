@@ -1,0 +1,1 @@
+set -gX VAGRANT_CLOUD_TOKEN (type -p qqrvdJxODivlLg.atlasv1.TH76WUTF9ZDofZbGdmpcjWGfqECduHy3mCoLGSQbeiOE2MI2Cta87tDyJmz3shiXRjk)

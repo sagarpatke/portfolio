@@ -8,6 +8,20 @@ variable "debian-netinst-iso-checksum" {
   default = "sha512:47d35187b4903e803209959434fb8b65ead3ad2a8f007eef1c3d3284f356ab9955aa7e15e24cb7af6a3859aa66837f5fa2e7441f936496ea447904f7dddfdc20"
 }
 
+variable "vagrant-cloud-token" {
+  type = string
+  default = "abc"
+}
+
+variable "build-version" {
+  type = string
+}
+
+variable "no-release" {
+  type = bool
+  default = true
+}
+
 source "virtualbox-iso" "buster64" {
   guest_os_type = "Debian_64"
   http_directory = "unattended"
@@ -45,15 +59,15 @@ source "virtualbox-iso" "buster64" {
   ]
 
   shutdown_command = "echo 'vagrant' | sudo -S shutdown -P now"
-  output_directory = "target"
+  output_directory = "target/buster64"
   output_filename = "packer_buster64_virtualbox"
 }
 
 source "vagrant" "buster64-lightdm-mate" {
   communicator = "ssh"
-  source_path = "target/packer_buster64_virtualbox.box"
+  source_path = "target/buster64/packer_buster64_virtualbox.box"
   provider = "virtualbox"
-  output_dir = "target/packer_buster64-lightdm-mate_virtualbox"
+  output_dir = "target/buster64-lightdm-mate/"
 }
 
 build {
@@ -71,11 +85,20 @@ build {
     user = "vagrant"
   }
 
-  post-processor "vagrant" {
-    keep_input_artifact = true
-    provider_override = "virtualbox"
-    compression_level = 9
-    output = "target/packer_buster64_virtualbox.box"
+  post-processors {
+    post-processor "vagrant" {
+      keep_input_artifact = true
+      provider_override = "virtualbox"
+      compression_level = 9
+      output = "target/buster64/packer_buster64_virtualbox.box"
+    }
+
+    post-processor "vagrant-cloud" {
+      no_release = "${var.no-release}"
+      access_token = "${var.vagrant-cloud-token}"
+      box_tag = "sagarpatke/buster64"
+      version = "${var.build-version}"
+    }
   }
 }
 
@@ -90,5 +113,12 @@ build {
 
   provisioner "ansible" {
     playbook_file = "posts/00003-vagrant-box-for-buster64/playbook-minimize.yaml"
+  }
+
+  post-processor "vagrant-cloud" {
+    no_release = "${var.no-release}"
+    access_token = "${var.vagrant-cloud-token}"
+    box_tag = "sagarpatke/buster64-lightdm-mate"
+    version = "${var.build-version}"
   }
 }
