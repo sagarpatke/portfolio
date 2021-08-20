@@ -3,7 +3,7 @@
 ## Status
 
 What is the status, such as proposed, accepted, rejected, deprecated, superseded, etc.?
-Accepted
+Deprecated by [00006 - Build a vagrant box for oldstable 64](./00006-vagrant-box-for-debian-oldstable-64)
 
 ## Context
 
