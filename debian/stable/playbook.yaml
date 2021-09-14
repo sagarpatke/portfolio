@@ -1,0 +1,44 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: Create vagrant user
+    user:
+      name: vagrant
+      password: $6$C62MHSsdh2TJg/SR$WgG4GXmhpG7rxQIFQ6RugwiLHO1gfOwqzhyxqzYm3/a72gasDY3TGvUw2kqUZmLboUcnRl9q9hdXoaAjOXyU40
+  - name: Upgrade
+    apt:
+      upgrade: full
+  - name: Remove cdrom entry from /etc/apt/sources.list
+    lineinfile:
+      path: /etc/apt/sources.list
+      regexp: "^deb cdrom"
+      state: absent
+  - name: Install linux-headers
+    apt:
+      name: "{{ item }}"
+      state: present
+    loop:
+    - linux-headers-{{ ansible_kernel }}
+    - build-essential
+  - name: Mount cdrom
+    mount:
+      src: /home/vagrant/VBoxGuestAdditions.iso
+      path: /mnt
+      opts: loop
+      state: mounted
+      fstype: iso9660
+  - name: Install 
+    shell: REMOVE_INSTALLATION_DIR=0 /mnt/VBoxLinuxAdditions.run
+    failed_when: false
+  - name: Unmount cdrom
+    mount:
+      path: /mnt
+      state: unmounted
+  - name: Remove linux-headers
+    apt:
+      name: "{{ item }}"
+      state: absent
+    loop:
+    - linux-headers-{{ ansible_kernel }}
+    - build-essential

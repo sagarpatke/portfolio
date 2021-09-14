@@ -1,0 +1,29 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: Upgrade
+    apt:
+      update_cache: yes
+      upgrade: full
+  - name: Install mate and lightdm
+    apt:
+      name:  "{{ item }}"
+      state: present
+    loop:
+    - mate-desktop-environment-core
+    - lightdm
+    notify:
+    - Enable lightdm
+    - Enable autologin
+  handlers:
+  - name: Enable lightdm
+    service:
+      name: lightdm
+      state: started
+      enabled: yes
+  - name: Enable autologin
+    lineinfile:
+      path: /etc/lightdm/lightdm.conf
+      regexp: "^#autologin-user"
+      line: autologin-user=vagrant
